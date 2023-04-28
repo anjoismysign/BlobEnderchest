@@ -69,7 +69,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                     }
                 EnderchestHolder holder = director.getInventoryManager().isBlobSerializable(player)
                         .orElseGet(() -> {
-                            BlobLibAssetAPI.getMessage(" Not-Inside-Plugin-Cache")
+                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
                                     .handle(player);
                             throw new RuntimeException("Player is not inside cache!");
                         });
@@ -94,14 +94,14 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 }
                 director.getInventoryManager().isBlobSerializable(player)
                         .ifPresentOrElse(EnderchestHolder::viewEnderchests, () -> {
-                            BlobLibAssetAPI.getMessage(" Not-Inside-Plugin-Cache")
+                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
                                     .handle(player);
                             throw new RuntimeException("Player is not inside cache!");
                         });
                 return true;
             }
             default -> {
-                BlobLibAssetAPI.getMessage("Cmd-Usage")
+                BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
                         .toCommandSender(sender);
                 return true;
             }
