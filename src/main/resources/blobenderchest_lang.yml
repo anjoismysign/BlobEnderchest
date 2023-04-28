@@ -1,4 +1,7 @@
 BlobEnderchest:
+  Cmd-Usage-NonAdmin:
+    Type: CHAT
+    Message: '&7Usage: /blobenderchest <view>'
   Cmd-Usage:
     Type: CHAT
     Message: '&7Usage: /blobenderchest <add/view>'

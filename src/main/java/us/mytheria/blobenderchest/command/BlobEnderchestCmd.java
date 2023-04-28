@@ -27,14 +27,25 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
         int length = args.length;
+        boolean hasAdminPermission = sender.hasPermission("blobenderchest.admin");
         if (length < 1) {
-            BlobLibAssetAPI.getMessage("Cmd-Usage")
+            if (!hasAdminPermission) {
+                BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                        .toCommandSender(sender);
+                return true;
+            }
+            BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
                     .toCommandSender(sender);
             return true;
         }
         String arg = args[0].toLowerCase();
         switch (arg) {
             case "add" -> {
+                if (!hasAdminPermission) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                            .toCommandSender(sender);
+                    return true;
+                }
                 if (length < 2) {
                     BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Add-Usage")
                             .toCommandSender(sender);
@@ -105,11 +116,13 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         List<String> list = new ArrayList<>();
         int length = args.length;
         if (length == 1) {
-            list.add("add");
+            if (sender.hasPermission("blobenderchest.add"))
+                list.add("add");
             list.add("view");
             return list;
         }
-        if (length == 2 && args[0].equalsIgnoreCase("add")) {
+        if (length == 2 && args[0].equalsIgnoreCase("add") &&
+                sender.hasPermission("blobenderchest.add")) {
             Bukkit.getOnlinePlayers().stream()
                     .map(HumanEntity::getName)
                     .forEach(list::add);
