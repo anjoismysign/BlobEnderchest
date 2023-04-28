@@ -1,0 +1,27 @@
+Title: '&8&lMY ENDERCHESTS'
+Size: 18
+Buttons:
+  AwkwardDesign:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: " "
+    Slot: 9-17
+  Next-Page:
+    ItemStack:
+      Material: ARROW
+      DisplayName: "&6Next Page"
+    Slot: 14
+  Previous-Page:
+    ItemStack:
+      Material: ARROW
+      DisplayName: "&6Previous Page"
+    Slot: 13
+  Enderchests:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 2
+      DisplayName: '&fLocked'
+      Lore:
+        - '&7Exclusive to event contributors'
+    Slot: 0-8

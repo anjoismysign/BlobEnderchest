@@ -1,0 +1,13 @@
+BlobEnderchest:
+  Cmd-Usage:
+    Type: CHAT
+    Message: '&7Usage: /blobenderchest <add/view>'
+  Cmd-Add-Usage:
+    Type: CHAT
+    Message: '&7Usage: /blobenderchest add <player> <rows>'
+  Create-Successful:
+    Type: CHAT
+    Message: '&7You have successfully created a BlobEnderchest for &6%player%&7 with &6%rows%&7 rows.'
+  Admin-Created:
+    Type: CHAT
+    Message: '&7A BlobEnderchest was created for you with &6%rows%&7 rows.'
