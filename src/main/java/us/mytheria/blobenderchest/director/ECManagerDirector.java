@@ -2,9 +2,9 @@ package us.mytheria.blobenderchest.director;
 
 import us.mytheria.blobenderchest.BlobEnderchest;
 import us.mytheria.blobenderchest.command.BlobEnderchestCmd;
-import us.mytheria.bloblib.managers.ManagerDirector;
+import us.mytheria.bloblib.entities.GenericManagerDirector;
 
-public class ECManagerDirector extends ManagerDirector {
+public class ECManagerDirector extends GenericManagerDirector<BlobEnderchest> {
     public ECManagerDirector(BlobEnderchest plugin) {
         super(plugin);
         registerAndUpdateBlobInventory("Enderchests");
@@ -16,11 +16,6 @@ public class ECManagerDirector extends ManagerDirector {
     @Override
     public void unload() {
         getInventoryManager().unload();
-    }
-
-    @Override
-    public BlobEnderchest getPlugin() {
-        return (BlobEnderchest) super.getPlugin();
     }
 
     public ConfigManager getConfigManager() {
