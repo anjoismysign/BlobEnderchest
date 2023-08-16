@@ -7,15 +7,16 @@ import us.mytheria.bloblib.managers.BlobPlugin;
 import us.mytheria.bloblib.managers.IManagerDirector;
 
 public final class BlobEnderchest extends BlobPlugin {
-    private ECManagerDirector director;
+    private BlobEnderchestAPI api;
     private IManagerDirector proxy;
     private PluginUpdater updater;
 
     @Override
     public void onEnable() {
-        director = new ECManagerDirector(this);
+        ECManagerDirector director = new ECManagerDirector(this);
         proxy = director.proxy();
         updater = generateGitHubUpdater("anjoismysign", "BlobEnderchest");
+        api = BlobEnderchestAPI.getInstance(director);
     }
 
     @Override
@@ -27,5 +28,9 @@ public final class BlobEnderchest extends BlobPlugin {
     @NotNull
     public PluginUpdater getPluginUpdater() {
         return updater;
+    }
+
+    public BlobEnderchestAPI getApi() {
+        return api;
     }
 }
