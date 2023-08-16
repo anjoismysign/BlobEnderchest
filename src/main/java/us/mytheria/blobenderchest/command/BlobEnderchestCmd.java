@@ -130,7 +130,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             case "open" -> {
                 if (length < 2) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Inspect-Usage")
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Open-Usage")
                             .toCommandSender(sender);
                     return true;
                 }
