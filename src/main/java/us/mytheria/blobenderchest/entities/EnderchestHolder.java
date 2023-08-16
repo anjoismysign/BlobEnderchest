@@ -69,10 +69,7 @@ public class EnderchestHolder implements BlobSerializable {
      *
      * @param enderchest the dynamic enderchest
      */
-    public Inventory open(DynamicEnderchest enderchest) {
-        Player player = getPlayer();
-        if (player == null)
-            throw new IllegalStateException("Player is null!");
+    public Inventory open(DynamicEnderchest enderchest, Player player) {
         Inventory inventory = enderchest.build();
         player.openInventory(inventory);
         viewing = new Tuple2<>(inventory, enderchest);
@@ -86,11 +83,11 @@ public class EnderchestHolder implements BlobSerializable {
      * @return the enderchest inventory, or null if it doesn't exist
      */
     @Nullable
-    public Inventory getEnderchest(int index) {
+    public Inventory getEnderchest(int index, Player player) {
         DynamicEnderchest enderchest = enderchests.get(index);
         if (enderchest == null)
             return null;
-        return open(enderchest);
+        return open(enderchest, player);
     }
 
     /**
@@ -135,7 +132,7 @@ public class EnderchestHolder implements BlobSerializable {
         Player player = getPlayer();
         if (player == null)
             throw new IllegalStateException("Player is null!");
-        Inventory inventory = getEnderchest(index);
+        Inventory inventory = getEnderchest(index, player);
         if (inventory == null) {
             createEnderchest(index, title, rows).build();
             return openOrCreate(index, title, rows);
@@ -147,10 +144,7 @@ public class EnderchestHolder implements BlobSerializable {
     /**
      * Will adapt so the player will be able to view all of their enderchests.
      */
-    public void viewEnderchests() {
-        Player player = getPlayer();
-        if (player == null)
-            throw new IllegalStateException("Player is null!");
+    public void viewEnderchests(Player player) {
         BlobSelector<DynamicEnderchest> selector = BlobSelector.build(BlobLibAssetAPI
                         .getBlobInventory("Enderchests"), player.getUniqueId(),
                 "PSRegion", enderchests.values());
@@ -160,7 +154,7 @@ public class EnderchestHolder implements BlobSerializable {
                 == null ? 1 : selector.getSlots("Enderchests").size());
         BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Open")
                 .handle(player);
-        selector.selectElement(player, this::open,
+        selector.selectElement(player, ec -> ec.open(player),
                 null, dynamicEnderchest -> {
                     ItemStack current = new ItemStack(Material.ENDER_CHEST);
                     String displayName = ChatColor.WHITE + dynamicEnderchest.getTitle();

@@ -93,7 +93,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(player)
-                        .ifPresentOrElse(EnderchestHolder::viewEnderchests, () -> {
+                        .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
                             BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
                                     .handle(player);
                             throw new RuntimeException("Player is not inside cache!");

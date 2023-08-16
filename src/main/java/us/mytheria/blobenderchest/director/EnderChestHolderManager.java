@@ -13,8 +13,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import us.mytheria.blobenderchest.entities.EnderchestHolder;
 import us.mytheria.bloblib.entities.BlobSerializableManager;
 
-public class InventoryManager extends BlobSerializableManager<EnderchestHolder> {
-    public InventoryManager(ECManagerDirector managerDirector) {
+public class EnderChestHolderManager extends BlobSerializableManager<EnderchestHolder> {
+    public EnderChestHolderManager(ECManagerDirector managerDirector) {
         super(managerDirector, crudable -> crudable, EnderchestHolder::new,
                 "EnderchestHolder", true,
                 null, null);
@@ -37,7 +37,7 @@ public class InventoryManager extends BlobSerializableManager<EnderchestHolder> 
         if (rightClicked.getType() != Material.ENDER_CHEST)
             return;
         event.setCancelled(true);
-        isBlobSerializable(player).ifPresent(EnderchestHolder::viewEnderchests);
+        isBlobSerializable(player).ifPresent(holder -> holder.viewEnderchests(player));
     }
 
     @EventHandler
@@ -46,6 +46,6 @@ public class InventoryManager extends BlobSerializableManager<EnderchestHolder> 
         if (event.getView().getTopInventory().getType() != InventoryType.ENDER_CHEST)
             return;
         event.setCancelled(true);
-        isBlobSerializable(player).ifPresent(EnderchestHolder::viewEnderchests);
+        isBlobSerializable(player).ifPresent(holder -> holder.viewEnderchests(player));
     }
 }

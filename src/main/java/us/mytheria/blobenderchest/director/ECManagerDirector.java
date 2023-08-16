@@ -10,7 +10,7 @@ public class ECManagerDirector extends GenericManagerDirector<BlobEnderchest> {
         registerAndUpdateBlobInventory("Enderchests");
         new BlobEnderchestCmd(this);
         addManager("Config", new ConfigManager(this));
-        addManager("Inventory", new InventoryManager(this));
+        addManager("Inventory", new EnderChestHolderManager(this));
     }
 
     @Override
@@ -22,7 +22,7 @@ public class ECManagerDirector extends GenericManagerDirector<BlobEnderchest> {
         return getManager("Config", ConfigManager.class);
     }
 
-    public InventoryManager getInventoryManager() {
-        return getManager("Inventory", InventoryManager.class);
+    public EnderChestHolderManager getInventoryManager() {
+        return getManager("Inventory", EnderChestHolderManager.class);
     }
 }
