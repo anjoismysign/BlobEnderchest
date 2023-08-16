@@ -19,12 +19,6 @@ public final class BlobEnderchest extends BlobPlugin {
     }
 
     @Override
-    public void onDisable() {
-        director.unload();
-        unregisterFromBlobLib();
-    }
-
-    @Override
     public IManagerDirector getManagerDirector() {
         return proxy;
     }
