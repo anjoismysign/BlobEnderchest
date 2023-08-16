@@ -128,6 +128,27 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                         });
                 return true;
             }
+            case "open" -> {
+                if (length < 2) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Inspect-Usage")
+                            .toCommandSender(sender);
+                    return true;
+                }
+                String name = args[1];
+                Player player = Bukkit.getPlayer(name);
+                if (player == null) {
+                    BlobLibAssetAPI.getMessage("Player.Not-Found")
+                            .toCommandSender(sender);
+                    return true;
+                }
+                director.getInventoryManager().isBlobSerializable(player)
+                        .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
+                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
+                                    .toCommandSender(sender);
+                            throw new RuntimeException("Player is not inside cache!");
+                        });
+                return true;
+            }
             default -> {
                 BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
                         .toCommandSender(sender);
