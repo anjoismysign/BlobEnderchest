@@ -58,8 +58,8 @@ public class DynamicEnderchest {
     }
 
     /**
-     * Will open the dynamic enderchest.
-     * Will also play the sound.
+     * Will open the dynamic enderchest to the specified player
+     * Will also play the sound
      *
      * @param player the player
      */

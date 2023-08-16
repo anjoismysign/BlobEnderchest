@@ -8,6 +8,9 @@ BlobEnderchest:
   Cmd-Add-Usage:
     Type: CHAT
     Message: '&7Usage: /blobenderchest add <player> <rows>'
+  Cmd-Inspect-Usage:
+    Type: CHAT
+    Message: '&7Usage: /blobenderchest inspect <player>'
   Create-Successful:
     Type: CHAT
     Message: '&7You have successfully created a BlobEnderchest for &6%player%&7 with &6%rows%&7 rows.'

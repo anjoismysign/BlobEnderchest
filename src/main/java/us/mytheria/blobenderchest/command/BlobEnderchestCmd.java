@@ -13,6 +13,8 @@ import us.mytheria.bloblib.BlobLibAssetAPI;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
     private final ECManagerDirector director;
@@ -88,11 +90,37 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             case "view" -> {
                 if (!(sender instanceof Player player)) {
-                    BlobLibAssetAPI.getMessage("Console-Not-Allowed-Command")
+                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
                             .toCommandSender(sender);
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(player)
+                        .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
+                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
+                                    .handle(player);
+                            throw new RuntimeException("Player is not inside cache!");
+                        });
+                return true;
+            }
+            case "inspect" -> {
+                if (!(sender instanceof Player player)) {
+                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
+                            .toCommandSender(sender);
+                    return true;
+                }
+                if (length < 2) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Inspect-Usage")
+                            .toCommandSender(sender);
+                    return true;
+                }
+                String name = args[1];
+                Player target = Bukkit.getPlayer(name);
+                if (target == null) {
+                    BlobLibAssetAPI.getMessage("Player.Not-Found")
+                            .toCommandSender(sender);
+                    return true;
+                }
+                director.getInventoryManager().isBlobSerializable(target)
                         .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
                             BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
                                     .handle(player);
@@ -116,17 +144,41 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         List<String> list = new ArrayList<>();
         int length = args.length;
         if (length == 1) {
-            if (sender.hasPermission("blobenderchest.add"))
+            if (sender.hasPermission("blobenderchest.add")) {
                 list.add("add");
+                list.add("open");
+                list.add("inspect");
+            }
             list.add("view");
             return list;
         }
-        if (length == 2 && args[0].equalsIgnoreCase("add") &&
-                sender.hasPermission("blobenderchest.add")) {
-            Bukkit.getOnlinePlayers().stream()
-                    .map(HumanEntity::getName)
-                    .forEach(list::add);
-            return list;
+        if (length == 2) {
+            String arg = args[0].toLowerCase();
+            switch (arg) {
+                case "add", "open" -> {
+                    if (!sender.hasPermission("blobenderchest.add"))
+                        return list;
+                    Bukkit.getOnlinePlayers().stream()
+                            .map(HumanEntity::getName)
+                            .forEach(list::add);
+                    return list;
+                }
+                case "inspect" -> {
+                    if (!(sender instanceof Player player))
+                        return list;
+                    if (!sender.hasPermission("blobenderchest.inspect"))
+                        return list;
+                    Set<String> names = Bukkit.getOnlinePlayers().stream()
+                            .map(HumanEntity::getName)
+                            .collect(Collectors.toSet());
+                    names.remove(player.getName());
+                    list.addAll(names);
+                    return list;
+                }
+                default -> {
+                    return list;
+                }
+            }
         }
         return null;
     }

@@ -77,9 +77,11 @@ public class EnderchestHolder implements BlobSerializable {
     }
 
     /**
-     * Will attempt to get the enderchest at the given index.
+     * Will attempt to get the enderchest at the given index
+     * and open it to the specified player
      *
-     * @param index the index
+     * @param index  the index
+     * @param player the player
      * @return the enderchest inventory, or null if it doesn't exist
      */
     @Nullable
@@ -137,12 +139,13 @@ public class EnderchestHolder implements BlobSerializable {
             createEnderchest(index, title, rows).build();
             return openOrCreate(index, title, rows);
         }
-        player.openInventory(inventory);
         return inventory;
     }
 
     /**
-     * Will adapt so the player will be able to view all of their enderchests.
+     * Will open the enderchests of this holder to the given player
+     *
+     * @param player the player that will see the enderchests
      */
     public void viewEnderchests(Player player) {
         BlobSelector<DynamicEnderchest> selector = BlobSelector.build(BlobLibAssetAPI
