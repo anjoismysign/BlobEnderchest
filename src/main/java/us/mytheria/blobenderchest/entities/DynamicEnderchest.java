@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import us.mytheria.blobenderchest.director.EnderChestHolderManager;
 import us.mytheria.bloblib.BlobLibAssetAPI;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.TextColor;
@@ -12,6 +14,7 @@ public class DynamicEnderchest {
     private String title;
     private int rows;
     private final ItemStack[] array;
+    private Inventory inventory;
 
     public DynamicEnderchest(String title, int rows, ItemStack[] array) {
         this.title = title;
@@ -54,7 +57,18 @@ public class DynamicEnderchest {
             inventory.setItem(y, itemStack);
             y++;
         }
+        this.inventory = inventory;
         return inventory;
+    }
+
+    /**
+     * Will return the inventory.
+     *
+     * @return the inventory
+     */
+    @NotNull
+    public Inventory getInventory() {
+        return inventory == null ? inventory = build() : inventory;
     }
 
     /**
@@ -63,10 +77,12 @@ public class DynamicEnderchest {
      *
      * @param player the player
      */
-    public void open(Player player) {
+    public Inventory open(Player player) {
         BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Open")
                 .handle(player);
-        player.openInventory(build());
+        player.openInventory(getInventory());
+        EnderChestHolderManager.getInstance().add(this);
+        return inventory;
     }
 
     /**
@@ -83,6 +99,20 @@ public class DynamicEnderchest {
                 break;
             }
         }
+    }
+
+    /**
+     * Will save current inventory.
+     */
+    public void save() {
+        save(inventory);
+    }
+
+    /**
+     * Will clean the inventory.
+     */
+    public void cleanInventory() {
+        this.inventory = null;
     }
 
     /**

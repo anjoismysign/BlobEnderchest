@@ -1,6 +1,5 @@
 package us.mytheria.blobenderchest.entities;
 
-import me.anjoismysign.anjo.entities.Tuple2;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -25,8 +24,6 @@ import java.util.Map;
 public class EnderchestHolder implements BlobSerializable {
     private final BlobCrudable crudable;
     private final Map<Integer, DynamicEnderchest> enderchests;
-
-    private Tuple2<Inventory, DynamicEnderchest> viewing;
 
     public EnderchestHolder(BlobCrudable crudable) {
         this.crudable = crudable;
@@ -69,10 +66,9 @@ public class EnderchestHolder implements BlobSerializable {
      *
      * @param enderchest the dynamic enderchest
      */
-    public Inventory open(DynamicEnderchest enderchest, Player player) {
-        Inventory inventory = enderchest.build();
-        player.openInventory(inventory);
-        viewing = new Tuple2<>(inventory, enderchest);
+    public Inventory open(DynamicEnderchest enderchest, EnderchestHolder viewer) {
+        Player player = viewer.getPlayer();
+        Inventory inventory = enderchest.open(player);
         return inventory;
     }
 
@@ -81,29 +77,15 @@ public class EnderchestHolder implements BlobSerializable {
      * and open it to the specified player
      *
      * @param index  the index
-     * @param player the player
+     * @param viewer the viewer
      * @return the enderchest inventory, or null if it doesn't exist
      */
     @Nullable
-    public Inventory getEnderchest(int index, Player player) {
+    public Inventory getEnderchest(int index, EnderchestHolder viewer) {
         DynamicEnderchest enderchest = enderchests.get(index);
         if (enderchest == null)
             return null;
-        return open(enderchest, player);
-    }
-
-    /**
-     * Will save the current viewing enderchest.
-     */
-    public void saveViewing() {
-        if (viewing == null)
-            return;
-        viewing.second().save(viewing.first());
-        Player player = getPlayer();
-        if (getPlayer() != null)
-            BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Close")
-                    .handle(player);
-        viewing = null;
+        return open(enderchest, viewer);
     }
 
     /**
@@ -123,6 +105,7 @@ public class EnderchestHolder implements BlobSerializable {
     /**
      * Will open the enderchest at the given index.
      * If it doesn't exist, it will create it before opening it.
+     * Will also open it to the specified player.
      *
      * @param index the index
      * @param title the title
@@ -130,15 +113,12 @@ public class EnderchestHolder implements BlobSerializable {
      * @return the enderchest inventory
      */
     @NotNull
-    public Inventory openOrCreate(int index, String title, int rows) {
-        Player player = getPlayer();
-        if (player == null)
-            throw new IllegalStateException("Player is null!");
-        Inventory inventory = getEnderchest(index, player);
-        if (inventory == null) {
-            createEnderchest(index, title, rows).build();
-            return openOrCreate(index, title, rows);
-        }
+    public Inventory openOrCreate(int index, String title, int rows, EnderchestHolder viewer) {
+        DynamicEnderchest enderchest = enderchests.get(index);
+        if (enderchest == null)
+            enderchest = createEnderchest(index, title, rows);
+        Player player = viewer.getPlayer();
+        Inventory inventory = enderchest.open(player);
         return inventory;
     }
 

@@ -15,6 +15,10 @@ public class BlobEnderchestAPI {
         return instance;
     }
 
+    public static BlobEnderchestAPI getInstance() {
+        return getInstance(null);
+    }
+
     private BlobEnderchestAPI(ECManagerDirector director) {
         this.director = director;
     }

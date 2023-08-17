@@ -103,7 +103,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 return true;
             }
             case "inspect" -> {
-                if (!(sender instanceof Player player)) {
+                if (!(sender instanceof Player inspector)) {
                     BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
                             .toCommandSender(sender);
                     return true;
@@ -121,9 +121,9 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(target)
-                        .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
+                        .ifPresentOrElse(targetHolder -> targetHolder.viewEnderchests(inspector), () -> {
                             BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
-                                    .handle(player);
+                                    .handle(inspector);
                             throw new RuntimeException("Player is not inside cache!");
                         });
                 return true;
