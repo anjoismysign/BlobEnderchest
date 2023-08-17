@@ -41,7 +41,6 @@ public class EnderChestHolderManager extends BlobSerializableManager<EnderchestH
         super(managerDirector, crudable -> crudable, EnderchestHolder::new,
                 "EnderchestHolder", true,
                 null, null);
-        getPlugin().getAnjoLogger().error("EnderChestHolderManager implemented");
         this.dynamicEnderchests = new HashMap<>();
     }
 
