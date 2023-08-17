@@ -103,6 +103,11 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 return true;
             }
             case "inspect" -> {
+                if (!hasAdminPermission) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                            .toCommandSender(sender);
+                    return true;
+                }
                 if (!(sender instanceof Player inspector)) {
                     BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
                             .toCommandSender(sender);
@@ -129,6 +134,11 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 return true;
             }
             case "open" -> {
+                if (!hasAdminPermission) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                            .toCommandSender(sender);
+                    return true;
+                }
                 if (length < 2) {
                     BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Open-Usage")
                             .toCommandSender(sender);
@@ -150,6 +160,11 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 return true;
             }
             default -> {
+                if (!hasAdminPermission) {
+                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                            .toCommandSender(sender);
+                    return true;
+                }
                 BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
                         .toCommandSender(sender);
                 return true;

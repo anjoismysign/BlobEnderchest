@@ -4,7 +4,7 @@ BlobEnderchest:
     Message: '&7Usage: /blobenderchest <view>'
   Cmd-Usage:
     Type: CHAT
-    Message: '&7Usage: /blobenderchest <add/view>'
+    Message: '&7Usage: /blobenderchest <add/view/inspect/open>'
   Cmd-Add-Usage:
     Type: CHAT
     Message: '&7Usage: /blobenderchest add <player> <rows>'
