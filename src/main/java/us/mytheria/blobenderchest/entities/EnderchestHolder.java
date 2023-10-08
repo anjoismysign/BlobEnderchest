@@ -9,9 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.blobenderchest.director.ConfigManager;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibInventoryAPI;
 import us.mytheria.bloblib.entities.BlobCrudable;
-import us.mytheria.bloblib.entities.BlobSelector;
 import us.mytheria.bloblib.entities.BlobSerializable;
 import us.mytheria.bloblib.itemstack.ItemStackBuilder;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
@@ -118,8 +117,7 @@ public class EnderchestHolder implements BlobSerializable {
         if (enderchest == null)
             enderchest = createEnderchest(index, title, rows);
         Player player = viewer.getPlayer();
-        Inventory inventory = enderchest.open(player);
-        return inventory;
+        return enderchest.open(player);
     }
 
     /**
@@ -128,23 +126,20 @@ public class EnderchestHolder implements BlobSerializable {
      * @param player the player that will see the enderchests
      */
     public void viewEnderchests(Player player) {
-        BlobSelector<DynamicEnderchest> selector = BlobSelector.build(BlobLibAssetAPI
-                        .getBlobInventory("Enderchests"), player.getUniqueId(),
-                "PSRegion", enderchests.values());
-        if (selector.getButton("Enderchests") == null)
-            throw new IllegalStateException("'Enderchests' button is null or not set!");
-        selector.setItemsPerPage(selector.getSlots("Enderchests")
-                == null ? 1 : selector.getSlots("Enderchests").size());
-        BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Open")
-                .handle(player);
-        selector.selectElement(player, ec -> ec.open(player),
-                null, dynamicEnderchest -> {
-                    ItemStack current = new ItemStack(Material.ENDER_CHEST);
-                    String displayName = ChatColor.WHITE + dynamicEnderchest.getTitle();
-                    ItemStackBuilder builder = ItemStackBuilder.build(current);
-                    builder.displayName(displayName);
-                    return builder.build();
-                });
+        BlobLibInventoryAPI.getInstance()
+                .customSelector("Enderchests",
+                        player,
+                        "Enderchests",
+                        "Enderchest",
+                        () -> enderchests.values().stream().toList(),
+                        ec -> ec.open(player),
+                        dynamicEnderchest -> {
+                            ItemStack current = new ItemStack(Material.ENDER_CHEST);
+                            String displayName = ChatColor.WHITE + dynamicEnderchest.getTitle();
+                            ItemStackBuilder builder = ItemStackBuilder.build(current);
+                            builder.displayName(displayName);
+                            return builder.build();
+                        });
     }
 
     /**

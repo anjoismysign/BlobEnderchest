@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import us.mytheria.blobenderchest.director.ConfigManager;
 import us.mytheria.blobenderchest.director.ECManagerDirector;
 import us.mytheria.blobenderchest.entities.EnderchestHolder;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibMessageAPI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +32,11 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         boolean hasAdminPermission = sender.hasPermission("blobenderchest.admin");
         if (length < 1) {
             if (!hasAdminPermission) {
-                BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
                         .toCommandSender(sender);
                 return true;
             }
-            BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
+            BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage")
                     .toCommandSender(sender);
             return true;
         }
@@ -44,19 +44,19 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         switch (arg) {
             case "add" -> {
                 if (!hasAdminPermission) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
                             .toCommandSender(sender);
                     return true;
                 }
                 if (length < 2) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Add-Usage")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Add-Usage")
                             .toCommandSender(sender);
                     return true;
                 }
                 String name = args[1];
                 Player player = Bukkit.getPlayer(name);
                 if (player == null) {
-                    BlobLibAssetAPI.getMessage("Player.Not-Found")
+                    BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found")
                             .toCommandSender(sender);
                     return true;
                 }
@@ -65,24 +65,29 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                     try {
                         rows = Integer.parseInt(args[2]);
                     } catch (NumberFormatException e) {
-                        BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Add-Usage")
+                        BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Add-Usage")
                                 .toCommandSender(sender);
                         return true;
                     }
                 EnderchestHolder holder = director.getInventoryManager().isBlobSerializable(player)
                         .orElseGet(() -> {
-                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
-                                    .handle(player);
+                            BlobLibMessageAPI.getInstance()
+                                    .getMessage("Player.Not-Inside-Plugin-Cache")
+                                    .toCommandSender(player);
                             throw new RuntimeException("Player is not inside cache!");
                         });
                 holder.createEnderchest(holder.lastEnderchestIndex() + 1, ConfigManager.getEnderchestTitle(),
                         rows);
-                BlobLibAssetAPI.getMessage("BlobEnderchest.Create-Successful").modder()
+                BlobLibMessageAPI.getInstance()
+                        .getMessage("BlobEnderchest.Create-Successful", player)
+                        .modder()
                         .replace("%player%", player.getName())
                         .replace("%rows%", rows + "")
                         .get()
                         .toCommandSender(sender);
-                BlobLibAssetAPI.getMessage("BlobEnderchest.Admin-Created").modder()
+                BlobLibMessageAPI.getInstance()
+                        .getMessage("BlobEnderchest.Admin-Created", player)
+                        .modder()
                         .replace("%rows%", rows + "")
                         .get()
                         .handle(player);
@@ -90,13 +95,14 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             case "view" -> {
                 if (!(sender instanceof Player player)) {
-                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
+                    BlobLibMessageAPI.getInstance().getMessage("System.Console-Not-Allowed-Command")
                             .toCommandSender(sender);
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(player)
                         .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
-                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
+                            BlobLibMessageAPI.getInstance()
+                                    .getMessage("Player.Not-Inside-Plugin-Cache", player)
                                     .handle(player);
                             throw new RuntimeException("Player is not inside cache!");
                         });
@@ -104,30 +110,33 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             case "inspect" -> {
                 if (!hasAdminPermission) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
                             .toCommandSender(sender);
                     return true;
                 }
                 if (!(sender instanceof Player inspector)) {
-                    BlobLibAssetAPI.getMessage("System.Console-Not-Allowed-Command")
+                    BlobLibMessageAPI.getInstance().getMessage("System.Console-Not-Allowed-Command")
                             .toCommandSender(sender);
                     return true;
                 }
                 if (length < 2) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Inspect-Usage")
-                            .toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("BlobEnderchest.Cmd-Inspect-Usage", inspector)
+                            .handle(inspector);
                     return true;
                 }
                 String name = args[1];
                 Player target = Bukkit.getPlayer(name);
                 if (target == null) {
-                    BlobLibAssetAPI.getMessage("Player.Not-Found")
-                            .toCommandSender(sender);
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("Player.Not-Found", inspector)
+                            .handle(inspector);
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(target)
                         .ifPresentOrElse(targetHolder -> targetHolder.viewEnderchests(inspector), () -> {
-                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
+                            BlobLibMessageAPI.getInstance()
+                                    .getMessage("Player.Not-Inside-Plugin-Cache", inspector)
                                     .handle(inspector);
                             throw new RuntimeException("Player is not inside cache!");
                         });
@@ -135,25 +144,25 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             case "open" -> {
                 if (!hasAdminPermission) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
                             .toCommandSender(sender);
                     return true;
                 }
                 if (length < 2) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Open-Usage")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Open-Usage")
                             .toCommandSender(sender);
                     return true;
                 }
                 String name = args[1];
                 Player player = Bukkit.getPlayer(name);
                 if (player == null) {
-                    BlobLibAssetAPI.getMessage("Player.Not-Found")
+                    BlobLibMessageAPI.getInstance().getMessage("Player.Not-Found")
                             .toCommandSender(sender);
                     return true;
                 }
                 director.getInventoryManager().isBlobSerializable(player)
                         .ifPresentOrElse(holder -> holder.viewEnderchests(player), () -> {
-                            BlobLibAssetAPI.getMessage("Player.Not-Inside-Plugin-Cache")
+                            BlobLibMessageAPI.getInstance().getMessage("Player.Not-Inside-Plugin-Cache")
                                     .toCommandSender(sender);
                             throw new RuntimeException("Player is not inside cache!");
                         });
@@ -161,11 +170,11 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             }
             default -> {
                 if (!hasAdminPermission) {
-                    BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
+                    BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage-NonAdmin")
                             .toCommandSender(sender);
                     return true;
                 }
-                BlobLibAssetAPI.getMessage("BlobEnderchest.Cmd-Usage")
+                BlobLibMessageAPI.getInstance().getMessage("BlobEnderchest.Cmd-Usage")
                         .toCommandSender(sender);
                 return true;
             }

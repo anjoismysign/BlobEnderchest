@@ -6,7 +6,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import us.mytheria.blobenderchest.director.EnderChestHolderManager;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
 import us.mytheria.bloblib.utilities.TextColor;
 
@@ -78,7 +78,7 @@ public class DynamicEnderchest {
      * @param player the player
      */
     public Inventory open(Player player) {
-        BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Open")
+        BlobLibSoundAPI.getInstance().getSound("BlobEnderchest.Inventory-Open")
                 .handle(player);
         player.openInventory(getInventory());
         EnderChestHolderManager.getInstance().add(this);

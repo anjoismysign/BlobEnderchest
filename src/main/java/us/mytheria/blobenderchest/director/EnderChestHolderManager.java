@@ -13,7 +13,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import us.mytheria.blobenderchest.entities.DynamicEnderchest;
 import us.mytheria.blobenderchest.entities.EnderchestHolder;
-import us.mytheria.bloblib.BlobLibAssetAPI;
+import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.entities.BlobSerializableManager;
 
 import java.util.HashMap;
@@ -64,7 +64,7 @@ public class EnderChestHolderManager extends BlobSerializableManager<EnderchestH
             return;
         dynamicEnderchest.save();
         dynamicEnderchests.remove(inventory);
-        BlobLibAssetAPI.getSound("BlobEnderchest.Inventory-Close")
+        BlobLibSoundAPI.getInstance().getSound("BlobEnderchest.Inventory-Close")
                 .handle(event.getPlayer());
     }
 
