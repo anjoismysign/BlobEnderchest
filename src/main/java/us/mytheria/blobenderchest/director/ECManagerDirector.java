@@ -7,7 +7,8 @@ import us.mytheria.bloblib.entities.GenericManagerDirector;
 public class ECManagerDirector extends GenericManagerDirector<BlobEnderchest> {
     public ECManagerDirector(BlobEnderchest plugin) {
         super(plugin);
-        registerAndUpdateBlobInventory("Enderchests");
+        registerBlobMessage("es_es/blobenderchest_lang");
+        registerBlobInventory("Enderchests", "es_es/Enderchests");
         new BlobEnderchestCmd(this);
         addManager("Config", new ConfigManager(this));
         addManager("Inventory", EnderChestHolderManager.getInstance(this));

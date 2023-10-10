@@ -1,0 +1,18 @@
+Locale: es_es
+BlobEnderchest:
+  Cmd-Usage:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest <add/view>'
+  Cmd-Add-Usage:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest add <player> <rows>'
+  Create-Successful:
+    Type: CHAT
+    Message: '&7Le creaste un BlobEnderchest a &6%player%&7 con
+      &6%rows%&7 filas'
+  Admin-Created:
+    Type: CHAT
+    Message: '&7Se te ha creado un BlobEnderchest de &6%rows%&7 filas'
+  Cmd-Usage-NonAdmin:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest <view>'

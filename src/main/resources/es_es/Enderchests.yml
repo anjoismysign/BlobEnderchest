@@ -1,0 +1,28 @@
+Locale: es_es
+Title: '&8&lMIS ENDERCHESTS'
+Size: 18
+Buttons:
+  AwkwardDesign:
+    ItemStack:
+      Material: BLACK_STAINED_GLASS_PANE
+      CustomModelData: 0
+      DisplayName: ' '
+    Slot: 9-17
+  Next-Page:
+    ItemStack:
+      Material: ARROW
+      DisplayName: '&6Siguiente página'
+    Slot: 14
+  Previous-Page:
+    ItemStack:
+      Material: ARROW
+      DisplayName: '&6Página anterior'
+    Slot: 13
+  Enderchests:
+    ItemStack:
+      Material: WHITE_STAINED_GLASS_PANE
+      CustomModelData: 2
+      DisplayName: '&fBloqueado'
+      Lore:
+      - '&7Exclusivo para participantes de eventos'
+    Slot: 0-8
