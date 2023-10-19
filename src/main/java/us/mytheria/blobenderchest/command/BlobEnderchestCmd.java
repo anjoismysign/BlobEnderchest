@@ -255,14 +255,12 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         List<String> list = new ArrayList<>();
         int length = args.length;
         if (length == 1) {
-            if (sender.hasPermission("blobenderchest.add"))
+            if (sender.hasPermission("blobenderchest.admin")) {
                 list.add("add");
-            if (sender.hasPermission("blobenderchest.inspect"))
-                list.add("inspect");
-            if (sender.hasPermission("blobenderchest.open"))
-                list.add("open");
-            if (sender.hasPermission("blobenderchest.deepinspect"))
                 list.add("deepinspect");
+                list.add("inspect");
+                list.add("open");
+            }
             list.add("view");
             return list;
         }
@@ -270,7 +268,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
             String arg = args[0].toLowerCase();
             switch (arg) {
                 case "add", "open" -> {
-                    if (!sender.hasPermission("blobenderchest.add"))
+                    if (!sender.hasPermission("blobenderchest.admin"))
                         return list;
                     Bukkit.getOnlinePlayers().stream()
                             .map(HumanEntity::getName)
@@ -280,7 +278,7 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                 case "inspect" -> {
                     if (!(sender instanceof Player player))
                         return list;
-                    if (!sender.hasPermission("blobenderchest.inspect"))
+                    if (!sender.hasPermission("blobenderchest.admin"))
                         return list;
                     Set<String> names = Bukkit.getOnlinePlayers().stream()
                             .map(HumanEntity::getName)
