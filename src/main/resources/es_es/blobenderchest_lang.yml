@@ -5,7 +5,7 @@ BlobEnderchest:
     Message: '&7Uso: /blobenderchest <add/view>'
   Cmd-Add-Usage:
     Type: CHAT
-    Message: '&7Uso: /blobenderchest add <player> <rows>'
+    Message: '&7Uso: /blobenderchest add <jugador> <filas>'
   Create-Successful:
     Type: CHAT
     Message: '&7Le creaste un BlobEnderchest a &6%player%&7 con
@@ -16,3 +16,12 @@ BlobEnderchest:
   Cmd-Usage-NonAdmin:
     Type: CHAT
     Message: '&7Uso: /blobenderchest <view>'
+  Cmd-Inspect-Usage:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest inspect <jugador>'
+  Cmd-Deep-Inspect-Usage:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest deepinspect <jugador/uuid>'
+  Cmd-Open-Usage:
+    Type: CHAT
+    Message: '&7Uso: /blobenderchest open <jugador>'

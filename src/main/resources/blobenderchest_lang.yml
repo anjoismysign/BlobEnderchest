@@ -11,6 +11,9 @@ BlobEnderchest:
   Cmd-Inspect-Usage:
     Type: CHAT
     Message: '&7Usage: /blobenderchest inspect <player>'
+  Cmd-Deep-Inspect-Usage:
+    Type: CHAT
+    Message: '&7Usage: /blobenderchest deepinspect <player/uuid>'
   Cmd-Open-Usage:
     Type: CHAT
     Message: '&7Usage: /blobenderchest open <player>'
@@ -20,3 +23,6 @@ BlobEnderchest:
   Admin-Created:
     Type: CHAT
     Message: '&7A BlobEnderchest was created for you with &6%rows%&7 rows.'
+  Deep-Inspect-Absent:
+    Type: CHAT
+    Message: '&7No results found for &6%key%&7.'

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import us.mytheria.blobenderchest.director.EnderChestHolderManager;
 import us.mytheria.bloblib.api.BlobLibSoundAPI;
 import us.mytheria.bloblib.utilities.ItemStackUtil;
@@ -76,13 +77,27 @@ public class DynamicEnderchest {
      * Will also play the sound
      *
      * @param player the player
+     * @param owner  the holder that owns the enderchest
      */
-    public Inventory open(Player player) {
+    public Inventory open(Player player, @Nullable EnderchestHolder owner) {
         BlobLibSoundAPI.getInstance().getSound("BlobEnderchest.Inventory-Open")
                 .handle(player);
         player.openInventory(getInventory());
-        EnderChestHolderManager.getInstance().add(this);
+        EnderChestHolderManager manager = EnderChestHolderManager.getInstance();
+        manager.add(this);
+        if (owner != null)
+            manager.inspect(inventory, owner);
         return inventory;
+    }
+
+    /**
+     * Will open the dynamic enderchest to the specified player
+     * Will also play the sound.
+     *
+     * @param player the player
+     */
+    public Inventory open(Player player) {
+        return open(player, null);
     }
 
     /**

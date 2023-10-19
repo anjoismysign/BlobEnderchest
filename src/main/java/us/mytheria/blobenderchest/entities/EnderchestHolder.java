@@ -121,18 +121,34 @@ public class EnderchestHolder implements BlobSerializable {
     }
 
     /**
-     * Will open the enderchests of this holder to the given player
+     * Will open the enderchests of this holder to the given player.
+     * Doesn't offline inspect.
      *
      * @param player the player that will see the enderchests
      */
     public void viewEnderchests(Player player) {
+        viewEnderchests(player, false);
+    }
+
+    /**
+     * Will open the enderchests of this holder to the given player
+     *
+     * @param player         the player that will see the enderchests
+     * @param offlineInspect whether the holder is being inspected
+     */
+    public void viewEnderchests(Player player, boolean offlineInspect) {
         BlobLibInventoryAPI.getInstance()
                 .customSelector("Enderchests",
                         player,
                         "Enderchests",
                         "Enderchest",
                         () -> enderchests.values().stream().toList(),
-                        ec -> ec.open(player),
+                        ec -> {
+                            if (offlineInspect)
+                                ec.open(player, this);
+                            else
+                                ec.open(player);
+                        },
                         dynamicEnderchest -> {
                             ItemStack current = new ItemStack(Material.ENDER_CHEST);
                             String displayName = ChatColor.WHITE + dynamicEnderchest.getTitle();

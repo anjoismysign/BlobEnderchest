@@ -8,12 +8,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import us.mytheria.blobenderchest.director.ConfigManager;
 import us.mytheria.blobenderchest.director.ECManagerDirector;
+import us.mytheria.blobenderchest.director.EnderChestHolderManager;
 import us.mytheria.blobenderchest.entities.EnderchestHolder;
 import us.mytheria.bloblib.api.BlobLibMessageAPI;
+import us.mytheria.bloblib.storage.IdentifierType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
@@ -115,6 +115,57 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
                         });
                 return true;
             }
+            case "deepinspect" -> {
+                if (!hasAdminPermission) {
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("BlobEnderchest.Cmd-Usage-NonAdmin", sender)
+                            .toCommandSender(sender);
+                    return true;
+                }
+                if (!(sender instanceof Player inspector)) {
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("System.Console-Not-Allowed-Command", sender)
+                            .toCommandSender(sender);
+                    return true;
+                }
+                if (length < 2) {
+                    BlobLibMessageAPI.getInstance()
+                            .getMessage("BlobEnderchest.Cmd-Deep-Inspect-Usage", inspector)
+                            .handle(inspector);
+                    return true;
+                }
+                String key = args[1];
+                EnderChestHolderManager manager = director.getInventoryManager();
+                IdentifierType identifierType =
+                        manager.getIdentifierType();
+                if (identifierType == IdentifierType.UUID) {
+                    UUID uuid = UUID.fromString(key);
+                    Optional<EnderchestHolder> optional = manager.isBlobSerializable(uuid);
+                    if (optional.isPresent()) {
+                        EnderchestHolder holder = optional.get();
+                        holder.viewEnderchests(inspector);
+                        return true;
+                    }
+                    if (!manager.exists(key)) {
+                        BlobLibMessageAPI.getInstance()
+                                .getMessage("BlobEnderchest.Deep-Inspect-Absent", inspector)
+                                .modder()
+                                .replace("%key%", key)
+                                .get()
+                                .handle(inspector);
+                        return true;
+                    }
+                    manager.readAsynchronously(key).thenAccept(holder -> {
+                        Bukkit.getScheduler().runTask(manager.getPlugin(), () -> {
+                            holder.viewEnderchests(inspector, true);
+                        });
+                    });
+                    return true;
+                } else {
+
+                }
+                return true;
+            }
             case "inspect" -> {
                 if (!hasAdminPermission) {
                     BlobLibMessageAPI.getInstance()
@@ -204,11 +255,14 @@ public class BlobEnderchestCmd implements CommandExecutor, TabCompleter {
         List<String> list = new ArrayList<>();
         int length = args.length;
         if (length == 1) {
-            if (sender.hasPermission("blobenderchest.add")) {
+            if (sender.hasPermission("blobenderchest.add"))
                 list.add("add");
-                list.add("open");
+            if (sender.hasPermission("blobenderchest.inspect"))
                 list.add("inspect");
-            }
+            if (sender.hasPermission("blobenderchest.open"))
+                list.add("open");
+            if (sender.hasPermission("blobenderchest.deepinspect"))
+                list.add("deepinspect");
             list.add("view");
             return list;
         }
