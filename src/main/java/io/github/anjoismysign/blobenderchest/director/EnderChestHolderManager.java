@@ -1,4 +1,4 @@
-package us.mytheria.blobenderchest.director;
+package io.github.anjoismysign.blobenderchest.director;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,12 +13,12 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
-import us.mytheria.blobenderchest.entities.DynamicEnderchest;
-import us.mytheria.blobenderchest.entities.EnderchestHolder;
-import us.mytheria.bloblib.api.BlobLibSoundAPI;
-import us.mytheria.bloblib.entities.BlobCrudable;
-import us.mytheria.bloblib.entities.BlobSerializableManager;
-import us.mytheria.bloblib.storage.IdentifierType;
+import io.github.anjoismysign.blobenderchest.entities.DynamicEnderchest;
+import io.github.anjoismysign.blobenderchest.entities.EnderchestHolder;
+import io.github.anjoismysign.bloblib.api.BlobLibSoundAPI;
+import io.github.anjoismysign.bloblib.entities.BlobCrudable;
+import io.github.anjoismysign.bloblib.entities.BlobSerializableManager;
+import io.github.anjoismysign.bloblib.storage.IdentifierType;
 
 import java.util.HashMap;
 import java.util.Map;

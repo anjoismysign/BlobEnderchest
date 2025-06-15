@@ -1,8 +1,8 @@
-package us.mytheria.blobenderchest.director;
+package io.github.anjoismysign.blobenderchest.director;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import us.mytheria.blobenderchest.BlobEnderchest;
-import us.mytheria.bloblib.utilities.TextColor;
+import io.github.anjoismysign.blobenderchest.BlobEnderchest;
+import io.github.anjoismysign.bloblib.utilities.TextColor;
 
 public class ConfigManager extends ECManager {
     private static String enderchestTitle;

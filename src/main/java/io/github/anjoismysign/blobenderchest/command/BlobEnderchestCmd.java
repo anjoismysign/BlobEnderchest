@@ -1,4 +1,4 @@
-package us.mytheria.blobenderchest.command;
+package io.github.anjoismysign.blobenderchest.command;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -6,12 +6,12 @@ import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import us.mytheria.blobenderchest.director.ConfigManager;
-import us.mytheria.blobenderchest.director.ECManagerDirector;
-import us.mytheria.blobenderchest.director.EnderChestHolderManager;
-import us.mytheria.blobenderchest.entities.EnderchestHolder;
-import us.mytheria.bloblib.api.BlobLibMessageAPI;
-import us.mytheria.bloblib.storage.IdentifierType;
+import io.github.anjoismysign.blobenderchest.director.ConfigManager;
+import io.github.anjoismysign.blobenderchest.director.ECManagerDirector;
+import io.github.anjoismysign.blobenderchest.director.EnderChestHolderManager;
+import io.github.anjoismysign.blobenderchest.entities.EnderchestHolder;
+import io.github.anjoismysign.bloblib.api.BlobLibMessageAPI;
+import io.github.anjoismysign.bloblib.storage.IdentifierType;
 
 import java.util.*;
 import java.util.stream.Collectors;

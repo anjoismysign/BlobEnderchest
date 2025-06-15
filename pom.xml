@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>us.mytheria</groupId>
+    <groupId>io.github.anjoismysign</groupId>
     <artifactId>BlobEnderchest</artifactId>
     <version>1.1.1</version>
     <packaging>jar</packaging>
@@ -12,8 +12,7 @@
     <name>BlobEnderchest</name>
 
     <properties>
-        <testServer>/Users/lbenav8095/Documents/Dev/Java/anjoismysign/BlobLumber</testServer>
-        <java.version>16</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -40,8 +39,6 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>${testServer}/plugins/${project.name}-${project.version}.jar
-                            </outputFile>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -85,9 +82,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>us.mytheria</groupId>
+            <groupId>io.github.anjoismysign</groupId>
             <artifactId>bloblib</artifactId>
-            <version>1.697.17</version>
+            <version>1.698.31</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

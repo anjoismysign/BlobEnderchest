@@ -1,4 +1,4 @@
-package us.mytheria.blobenderchest.entities;
+package io.github.anjoismysign.blobenderchest.entities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -6,10 +6,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import us.mytheria.blobenderchest.director.EnderChestHolderManager;
-import us.mytheria.bloblib.api.BlobLibSoundAPI;
-import us.mytheria.bloblib.utilities.ItemStackUtil;
-import us.mytheria.bloblib.utilities.TextColor;
+import io.github.anjoismysign.blobenderchest.director.EnderChestHolderManager;
+import io.github.anjoismysign.bloblib.api.BlobLibSoundAPI;
+import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
+import io.github.anjoismysign.bloblib.utilities.TextColor;
 
 public class DynamicEnderchest {
     private String title;

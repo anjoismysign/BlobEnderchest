@@ -1,6 +1,6 @@
-package us.mytheria.blobenderchest;
+package io.github.anjoismysign.blobenderchest;
 
-import us.mytheria.blobenderchest.director.ECManagerDirector;
+import io.github.anjoismysign.blobenderchest.director.ECManagerDirector;
 
 public class BlobEnderchestAPI {
     private static BlobEnderchestAPI instance;

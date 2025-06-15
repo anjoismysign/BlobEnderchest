@@ -1,8 +1,8 @@
-package us.mytheria.blobenderchest.director;
+package io.github.anjoismysign.blobenderchest.director;
 
-import us.mytheria.blobenderchest.BlobEnderchest;
-import us.mytheria.blobenderchest.command.BlobEnderchestCmd;
-import us.mytheria.bloblib.entities.GenericManagerDirector;
+import io.github.anjoismysign.blobenderchest.BlobEnderchest;
+import io.github.anjoismysign.blobenderchest.command.BlobEnderchestCmd;
+import io.github.anjoismysign.bloblib.entities.GenericManagerDirector;
 
 public class ECManagerDirector extends GenericManagerDirector<BlobEnderchest> {
     public ECManagerDirector(BlobEnderchest plugin) {

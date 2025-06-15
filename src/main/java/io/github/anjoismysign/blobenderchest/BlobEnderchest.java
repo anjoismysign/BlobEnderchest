@@ -1,10 +1,10 @@
-package us.mytheria.blobenderchest;
+package io.github.anjoismysign.blobenderchest;
 
 import org.jetbrains.annotations.NotNull;
-import us.mytheria.blobenderchest.director.ECManagerDirector;
-import us.mytheria.bloblib.entities.PluginUpdater;
-import us.mytheria.bloblib.managers.BlobPlugin;
-import us.mytheria.bloblib.managers.IManagerDirector;
+import io.github.anjoismysign.blobenderchest.director.ECManagerDirector;
+import io.github.anjoismysign.bloblib.entities.PluginUpdater;
+import io.github.anjoismysign.bloblib.managers.BlobPlugin;
+import io.github.anjoismysign.bloblib.managers.IManagerDirector;
 
 public final class BlobEnderchest extends BlobPlugin {
     private BlobEnderchestAPI api;

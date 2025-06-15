@@ -1,4 +1,4 @@
-package us.mytheria.blobenderchest.entities;
+package io.github.anjoismysign.blobenderchest.entities;
 
 import org.bson.Document;
 import org.bukkit.ChatColor;
@@ -8,12 +8,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import us.mytheria.blobenderchest.director.ConfigManager;
-import us.mytheria.bloblib.api.BlobLibInventoryAPI;
-import us.mytheria.bloblib.entities.BlobCrudable;
-import us.mytheria.bloblib.entities.BlobSerializable;
-import us.mytheria.bloblib.itemstack.ItemStackBuilder;
-import us.mytheria.bloblib.utilities.ItemStackUtil;
+import io.github.anjoismysign.blobenderchest.director.ConfigManager;
+import io.github.anjoismysign.bloblib.api.BlobLibInventoryAPI;
+import io.github.anjoismysign.bloblib.entities.BlobCrudable;
+import io.github.anjoismysign.bloblib.entities.BlobSerializable;
+import io.github.anjoismysign.bloblib.itemstack.ItemStackBuilder;
+import io.github.anjoismysign.bloblib.utilities.ItemStackUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,7 +155,10 @@ public class EnderchestHolder implements BlobSerializable {
                             ItemStackBuilder builder = ItemStackBuilder.build(current);
                             builder.displayName(displayName);
                             return builder.build();
-                        });
+                        },
+                        null,
+                        null,
+                        null);
     }
 
     /**
