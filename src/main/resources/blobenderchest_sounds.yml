@@ -1,11 +1,11 @@
 BlobEnderchest:
   Inventory-Open:
-    Sound: BLOCK_ENDER_CHEST_OPEN
+    Sound: block.ender_chest.open
     Volume: 1.0
     Pitch: 1.0
     Audience: PLAYER
   Inventory-Close:
-    Sound: BLOCK_ENDER_CHEST_CLOSE
+    Sound: block.ender_chest.close
     Volume: 1.0
     Pitch: 1.0
     Audience: PLAYER
